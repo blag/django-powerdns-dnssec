@@ -1,7 +1,7 @@
 """Serializer classes for DNSaaS API"""
 import ipaddress
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from powerdns.models import (
     CryptoKey,
     Domain,
@@ -27,7 +27,7 @@ class OwnerSerializer(ModelSerializer):
 
     owner = SlugRelatedField(
         slug_field='username',
-        queryset=User.objects.all(),
+        queryset=get_user_model().objects.all(),
         allow_null=True,
         required=False,
     )
@@ -46,7 +46,7 @@ class RecordRequestSerializer(OwnerSerializer):
     last_change = serializers.SerializerMethodField()
     target_owner = SlugRelatedField(
         slug_field='username',
-        queryset=User.objects.all(),
+        queryset=get_user_model().objects.all(),
         allow_null=True,
         required=False,
     )
